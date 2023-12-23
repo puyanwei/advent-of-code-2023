@@ -1,0 +1,48 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "2NFp5FPCO4hIZ8zVd5z82",
+      "type": "text",
+      "x": 266.35546875,
+      "y": 122,
+      "width": 714.84375,
+      "height": 192,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 890479645,
+      "version": 337,
+      "versionNonce": 1999612755,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1703338883052,
+      "link": null,
+      "locked": false,
+      "text": "Day One - Trebuchet Part One\n\n1. For each line look at the characters and combine the first\nand last characters that are a number to create a two \ndigit number.\n2. Store the 2 digit number\n3. When all the characters have been scanned, sum the two\ndigit numbers together",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 188,
+      "containerId": null,
+      "originalText": "Day One - Trebuchet Part One\n\n1. For each line look at the characters and combine the first\nand last characters that are a number to create a two \ndigit number.\n2. Store the 2 digit number\n3. When all the characters have been scanned, sum the two\ndigit numbers together",
+      "lineHeight": 1.2
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
