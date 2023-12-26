@@ -1,8 +1,10 @@
-export function trebuchet() {
-  return "Hello from day one function!"
+import { data } from "./data"
+
+export function trebuchet1() {
+  return calculateCalibrationValues(data)
 }
 
-export function calculateCode(input: string) {
+export function calculateCalibrationValues(input: string) {
   const array = input.split("\n")
   const arrayOfTwoDigitNumbers = array.map((line) => twoDigitCreator(line))
   const sum = sumDigits(arrayOfTwoDigitNumbers)
