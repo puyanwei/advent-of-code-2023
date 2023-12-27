@@ -28,7 +28,6 @@ export function twoDigitCreator(string: string) {
   if (!secondDigit) throw new Error("No second digit found")
 
   const code = parseInt(`${firstDigit + secondDigit}`)
-  console.log({ string, code })
   return code
 }
 
