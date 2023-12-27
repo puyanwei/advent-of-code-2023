@@ -1,74 +1,62 @@
 import { numbersToNumberWordsMap, wordNumbers } from "./consts"
 import { data } from "./data"
-import { NumberWords, WordNumberInfo } from "./types"
+import { calculateCalibrationValues } from "./trebuchet-1"
+import { WordNumberInfo } from "./types"
 
-// export function trebuchet2() {
-//   return calculateCalibrationValues(data)
-// }
+export function trebuchet2() {
+  const newData = addFirstAndLastNumbersToData(data)
+  return calculateCalibrationValues(newData)
+}
 
-// export function calculateCalibrationValues(input: string) {
-// const array = input.split("\n")
-// const arrayOfTwoDigitNumbers = array.map((line) => twoDigitCreator(line))
-// const sum = sumDigits(arrayOfTwoDigitNumbers)
-// return sum
-// }
+export function addFirstAndLastNumbersToData(input: string) {
+  const array = input.split("\n")
+  const convertedFirstNumbersLines = array.map((line) =>
+    convertWordNumbersToNumber(line, numbersToNumberWordsMap)
+  )
 
-// export function sumDigits(numbers: number[]) {
-//   return numbers.reduce((prevValue, current) => {
-//     return (prevValue += current)
-//   }, 0)
-// }
+  const convertedLastNumberLines = convertedFirstNumbersLines.map((line) => {
+    const { reversedLine, reversedMap } = reverseLineAndMap(line, numbersToNumberWordsMap)
+    const convertedLine = convertWordNumbersToNumber(reversedLine, reversedMap)
+    return reverseString(convertedLine)
+  })
 
-// export function twoDigitCreator(string: string) {
-//   const array = string.split("")
-//   const reversedArray = [...array].reverse()
+  return convertedLastNumberLines.join("\n")
+}
 
-//   const firstDigit = findFirstNumber(array)
-//   const secondDigit = findFirstNumber(reversedArray)
-
-//   if (!firstDigit) throw new Error("No first digit found")
-//   if (!secondDigit) throw new Error("No second digit found")
-
-//   const code = parseInt(`${firstDigit + secondDigit}`)
-//   return code
-// }
-
-// function findFirstNumber(array: string[]) {
-//   return array.find((element) => {
-//     if (parseInt(element)) return element
-//     return
-//   })
-// }
-
-export function convertWordNumberToNumber(string: string) {
-  let firstWordNumber: WordNumberInfo = { wordNumber: "", index: 10 }
-  let lastWordNumber: WordNumberInfo = { wordNumber: "", index: 0 }
+export function convertWordNumbersToNumber(string: string, conversionMap: Record<string, number>) {
+  let firstWordNumber: WordNumberInfo = { wordNumber: "", charIndex: 10 }
   let newString = ""
 
-  wordNumbers.forEach((wordNumber) => {
-    const matchingCharIndex = string.indexOf(wordNumber)
-    if (matchingCharIndex === -1) return null
+  Object.keys(conversionMap).forEach((word) => {
+    const matchingCharIndex = string.indexOf(word)
+    if (matchingCharIndex === -1) return
 
-    console.log({ wordIndex: matchingCharIndex, wordNumber })
-    if (matchingCharIndex <= firstWordNumber.index) {
-      firstWordNumber = { wordNumber, index: matchingCharIndex }
-    }
-    if (matchingCharIndex >= lastWordNumber.index) {
-      lastWordNumber = { wordNumber, index: matchingCharIndex }
+    if (matchingCharIndex <= firstWordNumber.charIndex) {
+      firstWordNumber = {
+        wordNumber: word,
+        charIndex: matchingCharIndex,
+      }
     }
     return
   })
 
-  if (firstWordNumber.wordNumber === "" || lastWordNumber.wordNumber === "")
-    throw new Error("No worded number found")
+  // There are no numbers as words
+  if (firstWordNumber.wordNumber === "") return string
 
-  newString = string.replace(
-    firstWordNumber.wordNumber,
-    `${numbersToNumberWordsMap[firstWordNumber.wordNumber]}`
-  )
-  newString = newString.replace(
-    lastWordNumber.wordNumber,
-    `${numbersToNumberWordsMap[lastWordNumber.wordNumber]}`
-  )
+  const { wordNumber } = firstWordNumber
+  const number = `${conversionMap[firstWordNumber.wordNumber]}`
+  newString = string.replace(wordNumber, `${wordNumber}${number}`)
   return newString
+}
+
+export function reverseString(string: string) {
+  return string.split("").reverse().join("")
+}
+
+export function reverseLineAndMap(line: string, map: Record<string, number>) {
+  const reversedLine = reverseString(line)
+  const reversedMap = Object.fromEntries(
+    Object.entries(map).map(([key, value]) => [reverseString(key), value])
+  )
+  return { reversedLine, reversedMap }
 }

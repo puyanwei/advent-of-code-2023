@@ -28,12 +28,13 @@ export function twoDigitCreator(string: string) {
   if (!secondDigit) throw new Error("No second digit found")
 
   const code = parseInt(`${firstDigit + secondDigit}`)
+  console.log({ string, code })
   return code
 }
 
 function findFirstNumber(array: string[]) {
   return array.find((element) => {
-    if (parseInt(element)) return element
+    if (parseInt(element)) return parseInt(element)
     return
   })
 }

@@ -1,3 +1,5 @@
+import { numbersToNumberWordsMap } from "./consts"
+
 export type NumberWords =
   | "one"
   | "two"
@@ -10,6 +12,6 @@ export type NumberWords =
   | "nine"
 
 export type WordNumberInfo = {
-  wordNumber: NumberWords | ""
-  index: number
+  wordNumber: string | ""
+  charIndex: number
 }
