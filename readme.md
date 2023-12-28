@@ -14,5 +14,4 @@ cd ./advent-of-code-2023
 npm install
 ```
 
-`npm start` runs the code to see the results in the terminal
-`npm test` runs the tests
+`npm start` runs the code to see the results in the terminal and `npm test` runs the tests

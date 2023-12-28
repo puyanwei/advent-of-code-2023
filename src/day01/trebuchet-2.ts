@@ -45,7 +45,7 @@ export function convertWordNumbersToNumber(string: string, conversionMap: Record
 
   const { wordNumber } = firstWordNumber
   const number = `${conversionMap[firstWordNumber.wordNumber]}`
-  newString = string.replace(wordNumber, `${wordNumber}${number}`)
+  newString = string.replace(wordNumber, `${number}`)
   return newString
 }
 
