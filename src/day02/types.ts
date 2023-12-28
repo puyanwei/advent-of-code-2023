@@ -2,7 +2,6 @@ export type GameHistory = Game[]
 
 export type Game = {
   gameNumber: number
-  isPossible: boolean
   cubesGrabbed: Turn[]
 }
 

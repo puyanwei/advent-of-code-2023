@@ -1,9 +1,22 @@
-import { GameHistory } from "./types"
+import { Game, Turn } from "./types"
 
-export const exampleResult = [
+export const maxNumbers: Turn[] = [
+  {
+    colour: "red",
+    number: 12,
+  },
+  {
+    colour: "green",
+    number: 13,
+  },
+  {
+    colour: "blue",
+    number: 14,
+  },
+]
+export const exampleResult: Game[] = [
   {
     gameNumber: 1,
-    isPossible: true,
     cubesGrabbed: [
       {
         colour: "blue",
@@ -33,7 +46,6 @@ export const exampleResult = [
   },
   {
     gameNumber: 2,
-    isPossible: true,
     cubesGrabbed: [
       {
         colour: "blue",
@@ -67,7 +79,6 @@ export const exampleResult = [
   },
   {
     gameNumber: 3,
-    isPossible: true,
     cubesGrabbed: [
       {
         colour: "green",
@@ -105,7 +116,6 @@ export const exampleResult = [
   },
   {
     gameNumber: 4,
-    isPossible: true,
     cubesGrabbed: [
       {
         colour: "green",
@@ -143,7 +153,6 @@ export const exampleResult = [
   },
   {
     gameNumber: 5,
-    isPossible: true,
     cubesGrabbed: [
       {
         colour: "red",
