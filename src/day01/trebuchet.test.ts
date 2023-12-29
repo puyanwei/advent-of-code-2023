@@ -5,7 +5,7 @@ import { convertWordNumbersToNumber, reverseLineAndMap, reverseString } from "./
 
 describe("Day 1 Part 1 - Trebuchet", () => {
   const [line1, line2, line3, line4] = example1.split("\n")
-  test("function twoDigitCreator", () => {
+  test("twoDigitCreator()", () => {
     expect(twoDigitCreator(line1)).toEqual(12)
     expect(twoDigitCreator(line2)).toEqual(38)
     expect(twoDigitCreator(line3)).toEqual(15)
@@ -19,7 +19,7 @@ describe("Day 1 Part 1 - Trebuchet", () => {
     }
   })
 
-  test("function sumDigits", () => {
+  test("sumDigits()", () => {
     expect(sumDigits([1, 2, 3])).toEqual(6)
   })
   test("Initial example", () => {
@@ -32,7 +32,7 @@ describe("Day 1 Part 1 - Trebuchet", () => {
 
 describe("Day 1 Part 2 - Trebuchet", () => {
   const [line1, line2, line3, line4, line5, line6, line7] = example2.split("\n")
-  test("function convertWordNumbersToNumber", () => {
+  test("convertWordNumbersToNumber()", () => {
     {
       const line1FirstWordNumberConversion = convertWordNumbersToNumber(
         line1,

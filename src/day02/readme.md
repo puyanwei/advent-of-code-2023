@@ -58,3 +58,12 @@ const newData = [
 - convertDataToGameObject(data) => newData
 - calculatePossibleGames(newData, objectOfMaxNumbers)
 - sumPossibleGames(newData)
+
+## Day Two - Cube Conundrum Part Two
+
+After quite a bit of analysis I tried to understand what "fewest number of cubes of each color that could have been in the bag to make the game possible?" meant in actual data terms. I found out that it basically is asking you to find the highest number for each coloured cube and then multiply them together, then sum up those totals.
+
+Using the existing new data structure that I created, I should be able to iterate through each game's turns and find out the highest number for each colour.
+
+1. Copy and modify the calculatePossibleGames() function so that it finds the highest number for each colour, and then returns the power of them all
+2. Return the value

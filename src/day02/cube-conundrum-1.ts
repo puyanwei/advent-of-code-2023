@@ -28,7 +28,7 @@ export function convertDataToGameHistory(input: string): Game[] {
   })
 }
 
-export function calculatePossibleGames(data: Game[], maxNumbers: Turn[]) {
+export function calculatePossibleGames(data: Game[], maxNumbers: Turn[]): number {
   return data.reduce((previous, current) => {
     const cubeComparisons = current.cubesGrabbed.map((cube) =>
       maxNumbers.map((maxNumber) => {

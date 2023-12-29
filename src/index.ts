@@ -1,6 +1,7 @@
 import { trebuchet1 } from "./day01/trebuchet-1"
 import { trebuchet2 } from "./day01/trebuchet-2"
 import { cubeConundrum1 } from "./day02/cube-conundrum-1"
+import { cubeConundrum2 } from "./day02/cube-conundrum-2"
 
 const intro = "Hello, Mr Puyan Wei. Welcome to Advent of Code 2023!"
 
@@ -12,3 +13,6 @@ console.log(intro)
 // )
 
 console.log(`Day 2, part 1 - The sum of all of the possible games is ${cubeConundrum1()}`)
+console.log(
+  `Day 2, part 2 - The sum of all of the possible games with the fewest number of cubes is ${cubeConundrum2()}`
+)
