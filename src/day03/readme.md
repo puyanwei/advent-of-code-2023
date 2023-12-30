@@ -14,11 +14,14 @@ Lets take the following example to work things out (please ignore the first row 
 | 16  | 17  | 18    | 19  | 20  |
 | 21  | 22  | 23    | 24  | 25  |
 
+```
 rows = 5
 columns = 5
 selectedPart = 9 (index of array, which starts at zero)
 partValue = 8
+```
 
+```
 topLeft = selectedPart - (columns + 1)
 top = selectedPart - columns
 topRight = selectedPart - (columns - 1)
@@ -27,15 +30,18 @@ right = selectedPart + 1
 bottomLeft = selectedPart + (columns - 1)
 bottom = selectedPart + columns
 bottomRight = selectedPart + (columns + 1)
+```
 
 For each part, there should be 8 checks on those positions (array indexes) to see if a symbol exists. If there is any, then the part is considered to be true.
 
 However, not all the parts have 8 positions, so that needs to be taken into account as well. If any of the parts are on any of the edges of the grid then there will not be 8 positions there should be less as they would not exist.
 
+```
 isLeftSide = selectedPart + 1 / columns === 0 (No BL, L, TL)
 isRightSide = selectedPart + 1 / columns === 0 (No BR, R, TR)
 isTop = selectedPart + 1/ row === 0 (No TL, T, TR)
 isBottom = selectedPart + 1 / row === 0 (No BL, B, BR)
+```
 
 \*\* Need to double check these calculations, not confident over them!
 
