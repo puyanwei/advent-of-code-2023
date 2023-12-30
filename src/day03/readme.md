@@ -4,15 +4,15 @@ The most obvious way of doing this is to look at the adjacent tiles on a part an
 
 If we assume that all tiles are part of one long array then we have to find a way of targeting the correct indexes corresponding to the adjacent tiles. The parts at the end/start of each row/column should also be considered as those will not have any adjacent tiles.
 
-Lets take the following example to work things out (please ignore the first row of blank cells, that's a markdown formatting issue);
+Lets take the following example to work things out (please ignore the first row of blank cells, that's a markdown formatting issue). Say we have 8 as our selected part...
 
-|     |     |                                                                                   |     |     |
-| --- | --- | --------------------------------------------------------------------------------- | --- | --- |
-| 1   | 2   | 3                                                                                 | 4   | 5   |
-| 6   | 7   | <span style="border: 2px solid black; border-radius: 50%; padding: 4px;">8</span> | 9   | 10  |
-| 11  | 12  | 13                                                                                | 14  | 15  |
-| 16  | 17  | 18                                                                                | 19  | 20  |
-| 21  | 22  | 23                                                                                | 24  | 25  |
+|     |     |     |     |     |
+| --- | --- | --- | --- | --- |
+| 1   | 2   | 3   | 4   | 5   |
+| 6   | 7   | 8\* | 9   | 10  |
+| 11  | 12  | 13  | 14  | 15  |
+| 16  | 17  | 18  | 19  | 20  |
+| 21  | 22  | 23  | 24  | 25  |
 
 ```
 rows = 5
