@@ -10,26 +10,16 @@ export function cubeConundrum2() {
 
 export function calculateFewestNumberOfGames(data: Game[], maxNumbers: Turn[]): number {
   return data.reduce((previous, current) => {
-    let red = 0
-    let green = 0
-    let blue = 0
+    const colors = { red: 0, green: 0, blue: 0 }
 
-    current.cubesGrabbed.forEach((cube) =>
+    current.cubesGrabbed.forEach((cube) => {
       maxNumbers.forEach((maxNumber) => {
-        if (maxNumber.colour !== cube.colour) {
-          if (cube.colour === "red" && cube.number > red) {
-            red = cube.number
-          }
-          if (cube.colour === "green" && cube.number > green) {
-            green = cube.number
-          }
-          if (cube.colour === "blue" && cube.number > blue) {
-            blue = cube.number
-          }
+        if (maxNumber.colour !== cube.colour && cube.number > colors[cube.colour]) {
+          colors[cube.colour] = cube.number
         }
-        return
       })
-    )
-    return (previous += red * green * blue)
+    })
+
+    return previous + colors.red * colors.green * colors.blue
   }, 0)
 }
