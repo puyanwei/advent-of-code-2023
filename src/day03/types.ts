@@ -4,13 +4,16 @@ export type Gear = {
   length: number
 }
 
-export type Edges =
-  | "Top Left Corner"
-  | "Top Right Corner"
-  | "Bottom Left Corner"
-  | "Bottom Right Corner"
-  | "Left Side"
-  | "Right Side"
-  | "Top Side"
-  | "Bottom Side"
-  | "Interior"
+export type Edge =
+  | "top left corner"
+  | "top right corner"
+  | "bottom left corner"
+  | "bottom right corner"
+  | "left side"
+  | "right side"
+  | "top side"
+  | "bottom side"
+  | "interior"
+
+export type PositionRemovalMap = Record<number, PositionRemoval>
+type PositionRemoval = Record<Edge, number[]>
