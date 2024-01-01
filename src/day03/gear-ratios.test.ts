@@ -26,26 +26,12 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
   test.only("hasAdjacentSymbol", () => {
     const data = example.split("")
     const gear1 = gearsInfo[0]
-    const gear2 = gearsInfo[1]
     const gear3 = gearsInfo[2]
     const gear4 = gearsInfo[3]
     const gear5 = gearsInfo[5]
-    // expect(hasAdjacentSymbol({ data: example.split(""), columns: 10, gear: gear3 })).toEqual(true)
-    expect(hasAdjacentSymbol({ data, columns: 10, gear: gear4 })).toEqual([
-      ".",
-      ".",
-      ".",
-      ".",
-      ".",
-      ".",
-      ".",
-      ".",
-      ".",
-      "#",
-      ".",
-      ".",
-    ])
-    // expect(hasAdjacentSymbol(example, gear3)).toBe(true)
-    // expect(hasAdjacentSymbol(example, gear5)).toBe(false)
+    expect(hasAdjacentSymbol({ data, columns: 10, gear: gear1 })).toBe(true)
+    expect(hasAdjacentSymbol({ data, columns: 10, gear: gear5 })).toBe(false)
+    expect(hasAdjacentSymbol({ data, columns: 10, gear: gear3 })).toEqual(true)
+    expect(hasAdjacentSymbol({ data, columns: 10, gear: gear4 })).toEqual(true)
   })
 })
