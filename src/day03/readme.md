@@ -25,11 +25,11 @@ partValue = 8
 topLeft = selectedPart - (columns + 1)
 top = selectedPart - columns
 topRight = selectedPart - (columns - 1)
-left = selectedPart - 1
 right = selectedPart + 1
-bottomLeft = selectedPart + (columns - 1)
-bottom = selectedPart + columns
 bottomRight = selectedPart + (columns + 1)
+bottom = selectedPart + columns
+bottomLeft = selectedPart + (columns - 1)
+left = selectedPart - 1
 ```
 
 For each part, there should be 8 checks on those positions (array indexes) to see if a symbol exists. If there is any, then the part is considered to be true.
