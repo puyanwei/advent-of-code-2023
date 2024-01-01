@@ -31,12 +31,26 @@ export function hasAdjacentSymbol({ data, columns, gear }: hasAdjacentSymbolPara
   const { index: gearPosition, length, value } = gear
   // 2 length number (should be 10 positions, starting from diagonally top left)
   // console.log(gear, data[gearPosition], data[gearPosition + 1], gearPosition)
+  // const adjacentPositions = [
+  //   gearPosition - columns - 2,
+  //   gearPosition - columns - 1,
+  //   gearPosition - columns,
+  //   gearPosition - columns + 1,
+  //   gearPosition + 2,
+  //   gearPosition + columns + 3,
+  //   gearPosition + columns + 2,
+  //   gearPosition + columns + 1,
+  //   gearPosition + columns,
+  //   gearPosition - 1,
+  // ]
   const adjacentPositions = [
     gearPosition - columns - 2,
     gearPosition - columns - 1,
     gearPosition - columns,
     gearPosition - columns + 1,
-    gearPosition + 2,
+    gearPosition - columns + 2,
+    gearPosition + 3,
+    gearPosition + columns + 4,
     gearPosition + columns + 3,
     gearPosition + columns + 2,
     gearPosition + columns + 1,
@@ -45,6 +59,8 @@ export function hasAdjacentSymbol({ data, columns, gear }: hasAdjacentSymbolPara
   ]
 
   const values = adjacentPositions.map((position) => data[position])
+
+  // const values = adjacentPositions.some((position) => data[position] !== ".")
   console.log({ values })
   // 3 length number
   return values
