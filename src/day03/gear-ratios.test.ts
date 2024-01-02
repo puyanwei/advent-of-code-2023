@@ -1,12 +1,13 @@
-import { gearsInfo } from "./consts"
-import { example } from "./data"
+import { dataResult, example2Result, gearsInfo } from "./consts"
+import { data, example, example2 } from "./data"
 import {
   createGearInfo,
-  gearRatios1,
   getGearValues,
+  getRowsAndColumns,
   hasAdjacentSymbol,
   identifyEdgeOfGrid,
   removeElements,
+  sumParts,
 } from "./gear-ratios-1"
 
 describe.only("Day 3 Part 1 - Gear Ratios", () => {
@@ -23,6 +24,8 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
       "664",
       "598",
     ])
+    expect(getGearValues(example2)).toEqual(example2Result)
+    expect(getGearValues(data)).toEqual(dataResult)
   })
 
   test("getGearsInfo()", () => {
@@ -40,6 +43,10 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
     expect(hasAdjacentSymbol({ data, columns: 10, rows: 10, gear: gear5 })).toBe(false)
     expect(hasAdjacentSymbol({ data, columns: 10, rows: 10, gear: gear3 })).toEqual(true)
     expect(hasAdjacentSymbol({ data, columns: 10, rows: 10, gear: gear4 })).toEqual(true)
+    const singleDigitGearInfo = { index: 13, value: "5", length: 1 }
+    expect(hasAdjacentSymbol({ data, columns: 10, rows: 10, gear: singleDigitGearInfo })).toEqual(
+      true
+    )
   })
   test("identifyEdgeOfGrid()", () => {
     expect(identifyEdgeOfGrid({ index: 0, rows: 10, columns: 10 })).toEqual("top left corner")
@@ -61,13 +68,16 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
       expect(error).toHaveProperty("message", "Index is larger then grid's largest index")
     }
   })
+  test("getRowsAndColumns()", () => {
+    expect(getRowsAndColumns(example)).toEqual({ numRows: 10, numColumns: 10 })
+  })
   test("removeElements()", () => {
     expect(removeElements([1, 2, 3], [1, 2])).toEqual([1])
     expect(removeElements([1, 2, 3], [2])).toEqual([1, 2])
     expect(removeElements([1, 2, 3, 2, 9, 9], [2, 0, 4])).toEqual([2, 2, 9])
   })
 
-  test("gearRatios1()", () => {
-    expect(gearRatios1(example)).toEqual(4361)
+  test("sumParts()", () => {
+    expect(sumParts(example)).toEqual(4361)
   })
 })

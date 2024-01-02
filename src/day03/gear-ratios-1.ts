@@ -1,22 +1,28 @@
 import { positionRemovalMap } from "./consts"
+import { data } from "./data"
 import { Edge, Gear } from "./types"
 
-export function gearRatios1(data: string) {
-  const resolvedData = data.split("").filter((element) => element !== "\n")
-  const gears = getGearValues(resolvedData.join(""))
-  const gearInfo = createGearInfo(resolvedData.join(""), gears)
+export function gearRatios1() {
+  const { rows, columns } = getRowsAndColumns(data)
+  return sumParts(data, rows, columns)
+}
+
+export function sumParts(data: string, columns = 10, rows = 10) {
+  const resolvedData = data.replace(/\n/g, ".")
+  const gears = getGearValues(resolvedData)
+  const gearInfo = createGearInfo(data, gears)
   return gearInfo.reduce((previous, current) => {
     const isWorkingPart = hasAdjacentSymbol({
-      data: resolvedData,
-      columns: 10,
-      rows: 10,
+      data: data.split(""),
+      columns: columns,
+      rows,
       gear: current,
     })
     return isWorkingPart ? (previous += parseInt(current.value)) : previous
   }, 0)
 }
 
-export function getGearValues(data: string) {
+export function getGearValues(data1: string) {
   return data.split(/(\d+)/).filter((element) => parseInt(element))
 }
 
@@ -40,40 +46,9 @@ type hasAdjacentSymbolParams = {
 
 export function hasAdjacentSymbol({ data, columns, rows, gear }: hasAdjacentSymbolParams) {
   const { index: gearPosition, length, value } = gear
-  // 2 length number (should be 10 positions, starting from diagonally top left clockwise)
-
-  const adjacentPositionsTwoDigits = [
-    gearPosition - columns - 2,
-    gearPosition - columns - 1,
-    gearPosition - columns,
-    gearPosition - columns + 1,
-    gearPosition + 2,
-    gearPosition + columns + 3,
-    gearPosition + columns + 2,
-    gearPosition + columns + 1,
-    gearPosition + columns,
-    gearPosition - 1,
-  ]
-  // 3 length number (should be 12 positions, starting from diagonally top left clockwise)
-
-  const adjacentPositionsThreeDigits = [
-    gearPosition - columns - 2,
-    gearPosition - columns - 1,
-    gearPosition - columns,
-    gearPosition - columns + 1,
-    gearPosition - columns + 2,
-    gearPosition + 3,
-    gearPosition + columns + 4,
-    gearPosition + columns + 3,
-    gearPosition + columns + 2,
-    gearPosition + columns + 1,
-    gearPosition + columns,
-    gearPosition - 1,
-  ]
-
-  const adjacentPositions = length === 2 ? adjacentPositionsTwoDigits : adjacentPositionsThreeDigits
-
+  const adjacentPositions = getAdjacentPositions(gearPosition, columns, length, value)
   const edge = identifyEdgeOfGrid({ index: gearPosition, rows, columns })
+
   const resolvedAdjacentPositions =
     edge === "interior"
       ? adjacentPositions
@@ -116,4 +91,68 @@ export function removeElements(array: number[], indexes: number[]): number[] {
   }
 
   return array
+}
+
+export function getRowsAndColumns(text: string) {
+  const rows = data.split("\n")
+  const columns = rows[0].length
+  return { rows: rows.length, columns }
+}
+
+function getAdjacentPositions(
+  gearPosition: number,
+  columns: number,
+  length: number,
+  value: string
+): number[] {
+  // 1 length number (should be 8 positions, starting from diagonally top left clockwise)
+  const adjacentPositionsOneDigits = [
+    gearPosition - columns - 2,
+    gearPosition - columns - 1,
+    gearPosition - columns,
+    gearPosition - columns + 1,
+    gearPosition + 2,
+    gearPosition + columns + 3,
+    gearPosition + columns + 2,
+    gearPosition + columns + 1,
+    gearPosition + columns,
+    gearPosition - 1,
+  ]
+  // 2 length number (should be 10 positions, starting from diagonally top left clockwise)
+
+  const adjacentPositionsTwoDigits = [
+    gearPosition - columns - 2,
+    gearPosition - columns - 1,
+    gearPosition - columns,
+    gearPosition - columns + 1,
+    gearPosition + 2,
+    gearPosition + columns + 3,
+    gearPosition + columns + 2,
+    gearPosition + columns + 1,
+    gearPosition + columns,
+    gearPosition - 1,
+  ]
+  // 3 length number (should be 12 positions, starting from diagonally top left clockwise)
+
+  const adjacentPositionsThreeDigits = [
+    gearPosition - columns - 2,
+    gearPosition - columns - 1,
+    gearPosition - columns,
+    gearPosition - columns + 1,
+    gearPosition - columns + 2,
+    gearPosition + 3,
+    gearPosition + columns + 4,
+    gearPosition + columns + 3,
+    gearPosition + columns + 2,
+    gearPosition + columns + 1,
+    gearPosition + columns,
+    gearPosition - 1,
+  ]
+  let adjacentPositions: number[] = []
+  if (length === 1) adjacentPositions = adjacentPositionsOneDigits
+  if (length === 2) adjacentPositions = adjacentPositionsTwoDigits
+  if (length === 3) adjacentPositions = adjacentPositionsThreeDigits
+  if (length < 0 || length > 3)
+    throw new Error(`Incompatible gear part length of ${length} in ${value}`)
+  return adjacentPositions
 }
