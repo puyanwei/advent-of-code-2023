@@ -2,6 +2,7 @@ import { dataResult, example2Result, gearsInfo } from "./consts"
 import { data, example, example2 } from "./data"
 import {
   createGearInfo,
+  gearRatios1,
   getGearValues,
   getRowsAndColumns,
   hasAdjacentSymbol,
@@ -24,6 +25,8 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
       "664",
       "598",
     ])
+
+    console.log(example.length, 11111)
     expect(getGearValues(example2)).toEqual(example2Result)
     expect(getGearValues(data)).toEqual(dataResult)
   })
@@ -69,15 +72,17 @@ describe.only("Day 3 Part 1 - Gear Ratios", () => {
     }
   })
   test("getRowsAndColumns()", () => {
-    expect(getRowsAndColumns(example)).toEqual({ numRows: 10, numColumns: 10 })
+    expect(getRowsAndColumns(example)).toEqual({ rows: 10, columns: 10 })
   })
   test("removeElements()", () => {
     expect(removeElements([1, 2, 3], [1, 2])).toEqual([1])
     expect(removeElements([1, 2, 3], [2])).toEqual([1, 2])
     expect(removeElements([1, 2, 3, 2, 9, 9], [2, 0, 4])).toEqual([2, 2, 9])
   })
-
   test("sumParts()", () => {
     expect(sumParts(example)).toEqual(4361)
+  })
+  test("gearRatios1()", () => {
+    expect(gearRatios1()).toEqual(537732)
   })
 })

@@ -8,9 +8,9 @@ export function gearRatios1() {
 }
 
 export function sumParts(data: string, columns = 10, rows = 10) {
-  const resolvedData = data.replace(/\n/g, ".")
-  const gears = getGearValues(resolvedData)
+  const gears = getGearValues(data)
   const gearInfo = createGearInfo(data, gears)
+
   return gearInfo.reduce((previous, current) => {
     const isWorkingPart = hasAdjacentSymbol({
       data: data.split(""),
@@ -22,8 +22,8 @@ export function sumParts(data: string, columns = 10, rows = 10) {
   }, 0)
 }
 
-export function getGearValues(data1: string) {
-  return data.split(/(\d+)/).filter((element) => parseInt(element))
+export function getGearValues(text: string) {
+  return text.split(/(\d+)/).filter((element) => parseInt(element))
 }
 
 export function createGearInfo(data: string, gears: string[]): Gear[] {
@@ -66,7 +66,9 @@ type identifyEdgeOfGridParams = {
 }
 
 export function identifyEdgeOfGrid({ index, rows, columns }: identifyEdgeOfGridParams): Edge {
-  if (index - 1 > rows * columns) throw new Error(`${index} is larger then grid's largest index`)
+  if (index > rows - 1 + rows * columns)
+    // The rows - 1 is due to the /n character being included in the index position
+    throw new Error(`${index} is larger then grid's largest index`)
   const topLeftCorner = index === 0
   const topRightCorner = index === columns - 1
   const bottomLeftCorner = index === (rows - 1) * columns
@@ -94,7 +96,7 @@ export function removeElements(array: number[], indexes: number[]): number[] {
 }
 
 export function getRowsAndColumns(text: string) {
-  const rows = data.split("\n")
+  const rows = text.split("\n")
   const columns = rows[0].length
   return { rows: rows.length, columns }
 }
