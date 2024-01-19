@@ -13,7 +13,8 @@ export function getScratchcardsScore(data: string) {
 export function getScore(scratchcards: Scratchcard[]): number {
   return scratchcards.reduce((prev, current) => {
     const duplicates = duplicateElements(current.playerNumbers, current.winningNumbers)
-    const score = duplicates === 1 ? 1 : (duplicates / 2) * duplicates
+    if (duplicates === 0) return prev
+    const score = duplicates === 1 ? 1 : Math.pow(2, duplicates - 1)
     return (prev += score)
   }, 0)
 }
