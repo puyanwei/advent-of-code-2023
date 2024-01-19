@@ -1,4 +1,4 @@
-import { dataResult } from "./consts"
+import { dataResult, scratchcardInfo } from "./consts"
 import { example } from "./data"
 import {
   duplicateElements,
@@ -8,8 +8,15 @@ import {
   scratchcards1,
   splitNumberString,
 } from "./scratchcards-1"
+import {
+  addDuplicateCount,
+  bonusScratchcards,
+  countScratchcards,
+  addArrays,
+} from "./scratchcards-2"
+import { ScratchcardInfo } from "./types"
 
-describe.only("Day 4 Part 1 - Scratchcards", () => {
+describe("Day 4 Part 1 - Scratchcards", () => {
   test("resolveData()", () => {
     expect(resolveData(example)).toEqual(dataResult)
   })
@@ -39,5 +46,34 @@ describe.only("Day 4 Part 1 - Scratchcards", () => {
 
   test("getScratchcardsScore()", () => {
     expect(getScratchcardsScore(example)).toEqual(13)
+  })
+  test("scratchcard1()", () => {
+    expect(scratchcards1()).toEqual(27845)
+  })
+})
+
+describe("Day 4 Part 2 - Scratchcards", () => {
+  test("addDuplicateCount()", () => {
+    expect(addDuplicateCount(dataResult)).toEqual(scratchcardInfo)
+  })
+
+  test("bonusScratchcards()", () => {
+    expect(bonusScratchcards(2)).toEqual([1, 1])
+    expect(bonusScratchcards(6)).toEqual([1, 1, 1, 1, 1, 1])
+  })
+
+  test("addArrays", () => {
+    expect(addArrays([1, 2, 3, 4], [5, 6, 7])).toEqual([6, 8, 10, 4])
+  })
+
+  test.only("countScratchcards()", () => {
+    const scratchcardInfo: ScratchcardInfo[] = [
+      {
+        winningNumbers: [41, 48, 83, 86, 17],
+        playerNumbers: [83, 86, 6, 31, 17, 9, 48, 53],
+        duplicates: 4,
+      },
+    ]
+    expect(countScratchcards(scratchcardInfo)).toEqual(5)
   })
 })
