@@ -1,5 +1,26 @@
+import { cards, example } from "../Day07/data"
+import { CamelCard, Card } from "./types"
+
 export function camelCards() {
-  return 1
+  console.log(transformData(example))
+  return transformData(example)
+}
+
+function transformData(data: string): CamelCard[] {
+  return data.split("\n").map((element) => {
+    const [hand, bid] = element.split(" ")
+    const handArray: Card[] = hand.split("").map((cardChar) => checkCharIsCard(cardChar))
+    return {
+      hand: handArray,
+      bid: parseInt(bid),
+      score: 0,
+    }
+  })
+}
+
+function checkCharIsCard(cardChar: string): Card {
+  if (!cards.includes(cardChar)) throw new Error("card type invalid")
+  return cardChar as Card
 }
 
 /*
