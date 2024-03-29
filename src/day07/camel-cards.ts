@@ -1,6 +1,6 @@
 import { cardMap, cards } from "./consts"
 import { example } from "./data"
-import { CamelCard, Card } from "./types"
+import { CamelCard, Card, HandResult } from "./types"
 
 export function camelCards() {
   const camelCardsData = transformData(example)
@@ -16,7 +16,7 @@ function transformData(data: string): CamelCard[] {
     return {
       hand: handArray,
       bid: parseInt(bid),
-      score: calculateScore(handArray),
+      result: calculateHandResult(handArray),
     }
   })
 }
@@ -24,12 +24,6 @@ function transformData(data: string): CamelCard[] {
 function checkCharIsCard(cardChar: string): Card {
   if (!cards.includes(cardChar)) throw new Error("card type invalid")
   return cardChar as Card
-}
-
-function calculateScore(hand: Card[]): number {
-  const singleCardPoints = calculateSingleCardPoints(hand)
-  const combinationPoints = calculateCombinationPoints(hand)
-  return singleCardPoints + combinationPoints
 }
 
 export function calculateSingleCardPoints(hand: Card[]): number {
@@ -40,21 +34,21 @@ export function calculateSingleCardPoints(hand: Card[]): number {
   }, 0)
 }
 
-export function calculateCombinationPoints(hand: Card[]): number {
+export function calculateHandResult(hand: Card[]): HandResult {
   const countMap: Record<string, number> = {}
   for (const card of hand) {
     // If a card exists + 1 to countMap object, otherwise start it at 1
     countMap[card] ? countMap[card]++ : (countMap[card] = 1)
   }
-  const score = Object.values(countMap).reduce((prev, duplicates, index) => {
-    if (duplicates < 2) return prev
-    if (duplicates === 2) return (prev += 100)
-    if (duplicates === 3) return (prev += 1000)
-    if (duplicates === 4) return (prev += 10000)
-    if (duplicates === 5) return (prev += 100000)
-    throw new Error("Invalid number of duplicates")
-  }, 0)
-  return score
+  const results = Object.values(countMap)
+  if (results.includes(5)) return "quintuple"
+  if (results.includes(4)) return "quads"
+  if (results.includes(3) && results.includes(2)) return "full house"
+  if (results.includes(3)) return "trips"
+  if (results.filter((num) => num === 2).length === 2) return "two pair"
+  if (results.includes(2)) return "pair"
+  if (results.includes(1)) return "single"
+  throw new Error("Invalid number of duplicates")
 }
 
 /*
