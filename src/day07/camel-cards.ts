@@ -4,8 +4,8 @@ import { CamelCard, Card, HandResult } from "./types"
 
 export function camelCards() {
   const camelCardsData = transformData(example)
-  // add in score to data object
-  console.log(camelCardsData)
+  // const resolvedCamelCardsData = orderByStrength(camelCardsData)
+  // calculateTotalWinnings
   return 0
 }
 
