@@ -1,4 +1,6 @@
-import { calculateHandResult, calculateSingleCardPoints } from "./camel-cards"
+import { calculateHandResult, calculateSingleCardPoints, orderByStrength } from "./camel-cards"
+import { exampleTransformed, exampleTransformedSorted, stengthOrder } from "./consts"
+import { example } from "./data"
 
 describe.only("Day 7 Part 1 - Camel Cards", () => {
   // test("function calculateSingleCardPoints()", () => {
@@ -18,5 +20,8 @@ describe.only("Day 7 Part 1 - Camel Cards", () => {
     expect(calculateHandResult(["Q", "Q", "Q", "J", "J"])).toEqual("full house")
     expect(calculateHandResult(["Q", "Q", "Q", "Q", "J"])).toEqual("quads")
     expect(calculateHandResult(["Q", "Q", "Q", "Q", "Q"])).toEqual("quintuple")
+  })
+  test.only("function orderByStrength()", () => {
+    expect(orderByStrength(exampleTransformed, stengthOrder)).toEqual(exampleTransformedSorted)
   })
 })

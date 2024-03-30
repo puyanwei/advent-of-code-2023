@@ -1,10 +1,11 @@
-import { cardMap, cards } from "./consts"
+import { cardMap, cards, stengthOrder } from "./consts"
 import { example } from "./data"
 import { CamelCard, Card, HandResult } from "./types"
 
 export function camelCards() {
   const camelCardsData = transformData(example)
-  // const resolvedCamelCardsData = orderByStrength(camelCardsData)
+  const resolvedCamelCardsData = orderByStrength(camelCardsData, stengthOrder)
+  console.log(resolvedCamelCardsData)
   // calculateTotalWinnings
   return 0
 }
@@ -12,7 +13,7 @@ export function camelCards() {
 function transformData(data: string): CamelCard[] {
   return data.split("\n").map((element) => {
     const [hand, bid] = element.split(" ")
-    const handArray: Card[] = hand.split("").map((cardChar) => checkCharIsCard(cardChar))
+    const handArray: Card[] = hand.split("").map((cardChar) => checkLetterIsCard(cardChar))
     return {
       hand: handArray,
       bid: parseInt(bid),
@@ -21,7 +22,7 @@ function transformData(data: string): CamelCard[] {
   })
 }
 
-function checkCharIsCard(cardChar: string): Card {
+function checkLetterIsCard(cardChar: string): Card {
   if (!cards.includes(cardChar)) throw new Error("card type invalid")
   return cardChar as Card
 }
@@ -49,6 +50,17 @@ export function calculateHandResult(hand: Card[]): HandResult {
   if (results.includes(2)) return "pair"
   if (results.includes(1)) return "single"
   throw new Error("Invalid number of duplicates")
+}
+
+export function orderByStrength(data: CamelCard[], order: HandResult[]): CamelCard[] {
+  data.map((camelCard) => {
+    if (order.includes(camelCard.result)) {
+      return camelCard
+    } else {
+      throw new Error("Invalid result")
+    }
+  })
+  return [...data].sort((a, b) => order.indexOf(a.result) - order.indexOf(b.result))
 }
 
 /*
