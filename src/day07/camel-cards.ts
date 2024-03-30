@@ -1,13 +1,11 @@
-import { cardMap, cards, stengthOrder } from "./consts"
-import { example } from "./data"
+import { cards, stengthOrder } from "./consts"
 import { CamelCard, Card, HandResult } from "./types"
 
-export function camelCards() {
-  const camelCardsData = transformData(example)
-  const resolvedCamelCardsData = orderByStrength(camelCardsData, stengthOrder)
-  console.log(resolvedCamelCardsData)
-  // calculateTotalWinnings
-  return 0
+export function camelCards(data: string) {
+  const camelCardsData = transformData(data)
+  const orderedCamelCardsData = orderByStrength(camelCardsData, stengthOrder, cards)
+  const totalWinnings = calculateTotalWinnings(orderedCamelCardsData)
+  return totalWinnings
 }
 
 function transformData(data: string): CamelCard[] {
@@ -18,21 +16,14 @@ function transformData(data: string): CamelCard[] {
       hand: handArray,
       bid: parseInt(bid),
       result: calculateHandResult(handArray),
+      firstCardOfMadeHand: getFirstCardOfMadeHand(handArray, cards),
     }
   })
 }
 
 function checkLetterIsCard(cardChar: string): Card {
-  if (!cards.includes(cardChar)) throw new Error("card type invalid")
+  if (!cards.includes(cardChar as Card)) throw new Error("card type invalid")
   return cardChar as Card
-}
-
-export function calculateSingleCardPoints(hand: Card[]): number {
-  return hand.reduce((prev, current) => {
-    return Object.keys(cardMap).includes(current)
-      ? (prev += cardMap[current])
-      : (prev += parseInt(current))
-  }, 0)
 }
 
 export function calculateHandResult(hand: Card[]): HandResult {
@@ -52,15 +43,48 @@ export function calculateHandResult(hand: Card[]): HandResult {
   throw new Error("Invalid number of duplicates")
 }
 
-export function orderByStrength(data: CamelCard[], order: HandResult[]): CamelCard[] {
+export function getFirstCardOfMadeHand(hand: Card[], cardStength: Card[]): Card {
+  const cardCounts: Record<string, number> = {}
+
+  for (const card of hand) {
+    if (cardCounts[card]) return card
+    cardCounts[card] = 1
+  }
+  // No paired card found so just return the first single card
+  return hand[0]
+}
+
+export function orderByStrength(
+  data: CamelCard[],
+  handStrength: HandResult[],
+  cardStrength: Card[]
+): CamelCard[] {
   data.map((camelCard) => {
-    if (order.includes(camelCard.result)) {
+    if (handStrength.includes(camelCard.result)) {
       return camelCard
     } else {
       throw new Error("Invalid result")
     }
   })
-  return [...data].sort((a, b) => order.indexOf(a.result) - order.indexOf(b.result))
+  return [...data].sort((a, b) => {
+    const aIndex = handStrength.indexOf(a.result)
+    const bIndex = handStrength.indexOf(b.result)
+    if (aIndex !== bIndex) return bIndex - aIndex
+
+    // If result is the same, then sort by firstCardOfMadeHand
+    const aCardIndex = cardStrength.indexOf(a.firstCardOfMadeHand)
+    const bCardIndex = cardStrength.indexOf(b.firstCardOfMadeHand)
+
+    // TODO: might need to account for 2 pairs where first pair is the same
+    return aCardIndex - bCardIndex
+  })
+}
+
+function calculateTotalWinnings(data: CamelCard[]): number {
+  return data.reduce((prev, current, index) => {
+    const handScore = current.bid * (index + 1)
+    return (prev += handScore)
+  }, 0)
 }
 
 /*

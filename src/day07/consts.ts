@@ -1,6 +1,20 @@
-import { CamelCard, HandResult } from "./types"
+import { CamelCard, Card, HandResult } from "./types"
 
-export const cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"]
+export const cards: Card[] = [
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "T",
+  "J",
+  "Q",
+  "K",
+  "A",
+] as const
 
 export const cardMap: Record<string, number> = {
   A: 14,
@@ -21,19 +35,19 @@ export const stengthOrder: HandResult[] = [
 ] as const
 
 export const exampleTransformed: CamelCard[] = [
-  { hand: ["3", "2", "T", "3", "K"], bid: 765, result: "pair" },
-  { hand: ["T", "5", "5", "J", "5"], bid: 684, result: "trips" },
-  { hand: ["K", "K", "6", "7", "7"], bid: 28, result: "two pair" },
-  { hand: ["K", "T", "J", "J", "T"], bid: 220, result: "two pair" },
-  { hand: ["Q", "Q", "Q", "J", "A"], bid: 483, result: "trips" },
+  { hand: ["3", "2", "T", "3", "K"], bid: 765, result: "pair", firstCardOfMadeHand: "3" },
+  { hand: ["T", "5", "5", "J", "5"], bid: 684, result: "trips", firstCardOfMadeHand: "5" },
+  { hand: ["K", "K", "6", "7", "7"], bid: 28, result: "two pair", firstCardOfMadeHand: "K" },
+  { hand: ["K", "T", "J", "J", "T"], bid: 220, result: "two pair", firstCardOfMadeHand: "J" },
+  { hand: ["Q", "Q", "Q", "J", "A"], bid: 483, result: "trips", firstCardOfMadeHand: "Q" },
 ] as const
 
 export const exampleTransformedSorted: CamelCard[] = [
-  { hand: ["T", "5", "5", "J", "5"], bid: 684, result: "trips" },
-  { hand: ["Q", "Q", "Q", "J", "A"], bid: 483, result: "trips" },
-  { hand: ["K", "K", "6", "7", "7"], bid: 28, result: "two pair" },
-  { hand: ["K", "T", "J", "J", "T"], bid: 220, result: "two pair" },
-  { hand: ["3", "2", "T", "3", "K"], bid: 765, result: "pair" },
+  { hand: ["3", "2", "T", "3", "K"], bid: 765, result: "pair", firstCardOfMadeHand: "3" },
+  { hand: ["K", "T", "J", "J", "T"], bid: 220, result: "two pair", firstCardOfMadeHand: "J" },
+  { hand: ["K", "K", "6", "7", "7"], bid: 28, result: "two pair", firstCardOfMadeHand: "K" },
+  { hand: ["T", "5", "5", "J", "5"], bid: 684, result: "trips", firstCardOfMadeHand: "5" },
+  { hand: ["Q", "Q", "Q", "J", "A"], bid: 483, result: "trips", firstCardOfMadeHand: "Q" },
 ] as const
 
 /* Scoring

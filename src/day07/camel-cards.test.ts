@@ -1,16 +1,14 @@
-import { calculateHandResult, calculateSingleCardPoints, orderByStrength } from "./camel-cards"
-import { exampleTransformed, exampleTransformedSorted, stengthOrder } from "./consts"
+import {
+  calculateHandResult,
+  camelCards,
+  getFirstCardOfMadeHand,
+  orderByStrength,
+} from "./camel-cards"
+import { cards, exampleTransformed, exampleTransformedSorted, stengthOrder } from "./consts"
 import { example } from "./data"
 
-describe.only("Day 7 Part 1 - Camel Cards", () => {
-  // test("function calculateSingleCardPoints()", () => {
-  //   expect(calculateSingleCardPoints(["3", "2", "T", "3", "K"])).toEqual(31)
-  //   expect(calculateSingleCardPoints(["T", "5", "5", "J", "5"])).toEqual(36)
-  //   expect(calculateSingleCardPoints(["K", "K", "6", "7", "7"])).toEqual(46)
-  //   expect(calculateSingleCardPoints(["K", "T", "J", "J", "T"])).toEqual(55)
-  //   expect(calculateSingleCardPoints(["Q", "Q", "Q", "J", "A"])).toEqual(61)
-  // })
-  test.only("function calculateHandResult()", () => {
+describe("Day 7 Part 1 - Camel Cards", () => {
+  test("function calculateHandResult()", () => {
     expect(calculateHandResult(["A", "2", "T", "3", "K"])).toEqual("single")
     expect(calculateHandResult(["A", "2", "T", "T", "K"])).toEqual("pair")
     expect(calculateHandResult(["T", "5", "5", "J", "5"])).toEqual("trips")
@@ -21,7 +19,20 @@ describe.only("Day 7 Part 1 - Camel Cards", () => {
     expect(calculateHandResult(["Q", "Q", "Q", "Q", "J"])).toEqual("quads")
     expect(calculateHandResult(["Q", "Q", "Q", "Q", "Q"])).toEqual("quintuple")
   })
-  test.only("function orderByStrength()", () => {
-    expect(orderByStrength(exampleTransformed, stengthOrder)).toEqual(exampleTransformedSorted)
+  test("function orderByStrength()", () => {
+    expect(orderByStrength(exampleTransformed, stengthOrder, cards)).toEqual(
+      exampleTransformedSorted
+    )
+  })
+  test("function getFirstCardOfMadeHand()", () => {
+    expect(getFirstCardOfMadeHand(["3", "2", "T", "3", "K"], cards)).toEqual("3")
+    expect(getFirstCardOfMadeHand(["T", "5", "5", "J", "5"], cards)).toEqual("5")
+    expect(getFirstCardOfMadeHand(["K", "K", "6", "7", "7"], cards)).toEqual("K")
+    expect(getFirstCardOfMadeHand(["K", "T", "J", "J", "T"], cards)).toEqual("J")
+    expect(getFirstCardOfMadeHand(["Q", "Q", "Q", "J", "A"], cards)).toEqual("Q")
+  })
+
+  test("function camelCards()", () => {
+    expect(camelCards(example)).toEqual(6440)
   })
 })
