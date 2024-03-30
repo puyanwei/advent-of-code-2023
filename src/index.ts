@@ -5,7 +5,7 @@ import { cubeConundrum2 } from "./day02/cube-conundrum-2"
 import { gearRatios1 } from "./day03/gear-ratios-1"
 import { scratchcards1 } from "./day04/scratchcards-1"
 import { camelCards } from "./day07/camel-cards"
-import { data } from "./day07/data"
+import { data, example } from "./day07/data"
 
 const intro = "Hello, Mr Puyan Wei. Welcome to Advent of Code 2023!"
 

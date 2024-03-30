@@ -3,6 +3,7 @@ import { CamelCard, Card, HandResult } from "./types"
 
 export function camelCards(data: string) {
   const camelCardsData = transformData(data)
+  console.log(camelCardsData)
   const orderedCamelCardsData = orderByStrength(camelCardsData, stengthOrder, cards)
   const totalWinnings = calculateTotalWinnings(orderedCamelCardsData)
   return totalWinnings
@@ -16,7 +17,7 @@ function transformData(data: string): CamelCard[] {
       hand: handArray,
       bid: parseInt(bid),
       result: calculateHandResult(handArray),
-      firstCardOfMadeHand: getFirstCardOfMadeHand(handArray, cards),
+      firstCardOfMadeHand: getCardsOfMadeHand(handArray),
     }
   })
 }
@@ -43,15 +44,37 @@ export function calculateHandResult(hand: Card[]): HandResult {
   throw new Error("Invalid number of duplicates")
 }
 
-export function getFirstCardOfMadeHand(hand: Card[], cardStength: Card[]): Card {
-  const cardCounts: Record<string, number> = {}
-
+export function getCardsOfMadeHand(hand: Card[]): Card[] {
+  const cardCounts = {} as Record<Card, number>
+  const cardsOfMadeHand: Card[] = []
+  // Loop through the cards to count the duplicates and check if the card has been encountered before. If not encountered before, initialize the count to 1, if it has increment the count by 1
   for (const card of hand) {
-    if (cardCounts[card]) return card
-    cardCounts[card] = 1
+    if (!cardCounts[card]) {
+      cardCounts[card] = 1
+    } else {
+      cardCounts[card] += 1
+      // If the count reaches 2, add the card to the cardsOfMadeHand array
+      if (cardCounts[card] === 2) {
+        cardsOfMadeHand.push(card)
+      }
+    }
   }
-  // No paired card found so just return the first single card
-  return hand[0]
+
+  return resolvePairs(cardsOfMadeHand, hand)
+}
+
+function resolvePairs(pairs: Card[], hand: Card[]): Card[] {
+  const hasTwoPairs = pairs.length === 2
+  const firstSingleCardOfHand = [hand[0]]
+  // No pairs
+  if (pairs.length === 0) return firstSingleCardOfHand
+  if (hasTwoPairs) {
+    const [firstPair, secondPair] = pairs
+    // Quads return as 1 card, but logic sees it as two pair
+    if (firstPair === secondPair) return [firstPair]
+  }
+  // One pair
+  return pairs
 }
 
 export function orderByStrength(
@@ -72,8 +95,8 @@ export function orderByStrength(
     if (aIndex !== bIndex) return bIndex - aIndex
 
     // If result is the same, then sort by firstCardOfMadeHand
-    const aCardIndex = cardStrength.indexOf(a.firstCardOfMadeHand)
-    const bCardIndex = cardStrength.indexOf(b.firstCardOfMadeHand)
+    const aCardIndex = cardStrength.indexOf(a.firstCardOfMadeHand[0])
+    const bCardIndex = cardStrength.indexOf(b.firstCardOfMadeHand[0])
 
     // TODO: might need to account for 2 pairs where first pair is the same
     return aCardIndex - bCardIndex

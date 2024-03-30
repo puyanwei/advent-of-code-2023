@@ -13,5 +13,5 @@ export type CamelCard = {
   hand: Card[]
   bid: number
   result: HandResult
-  firstCardOfMadeHand: Card
+  firstCardOfMadeHand: Card[]
 }
